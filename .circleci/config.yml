@@ -21,7 +21,7 @@ jobs:
       
       - run:
           name: Run Tests
-          command: 
+          command: |
               dotnet test --no-build --logger "trx"
               dotnet tool install -g trx2junit
               export PATH="$PATH:/root/.dotnet/tools"
