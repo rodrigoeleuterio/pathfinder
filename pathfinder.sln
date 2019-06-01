@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core", "core\core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app-terminal", "app-terminal\app-terminal.csproj", "{2CBC39CE-54BD-4E98-81A9-99B6FE562C49}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unit-tests", "unit-tests\unit-tests.csproj", "{B7C8C46B-E566-4CE8-8F95-32221B60EAC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unit-tests-core", "unit-tests-core\unit-tests-core.csproj", "{B7C8C46B-E566-4CE8-8F95-32221B60EAC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
