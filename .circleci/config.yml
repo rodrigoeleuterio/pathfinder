@@ -5,19 +5,36 @@ jobs:
   build:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+
     steps:
       - checkout
+      
       - run:
           name: Restore Packages
-          command: dotnet restore
+          command: 
+              dotnet restore
+      
       - run:
           name: Build
-          command: dotnet build
+          command: 
+              dotnet build
+      
       - run:
           name: Run Tests
-          command: dotnet test --logger "trx;logfilename=result.xml" --results-directory ./test-results
+          command: 
+              dotnet test --no-build --logger "trx"
+              dotnet tool install -g trx2junit
+              export PATH="$PATH:/root/.dotnet/tools"
+              trx2junit tests/**/TestResults/*.trx
+      
       - run:
           name: Run Terminal App
-          command: dotnet run -p app-terminal
+          command: 
+              dotnet run -p app-terminal
+                     
       - store_test_results:
-          path: /unit-tests-core/test-results
+          path: tests/TestResults
+          
+      - store_artifacts:
+          path: tests/TestResults
+          destination: TestResults
