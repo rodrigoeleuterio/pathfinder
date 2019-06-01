@@ -30,6 +30,7 @@ jobs:
               dotnet tool install -g trx2junit
               export PATH="$PATH:/root/.dotnet/tools"
               trx2junit test-results/*.trx
+          when: always
       
       - run:
           name: Run Terminal App
