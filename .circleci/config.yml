@@ -15,7 +15,7 @@ jobs:
           command: dotnet build
       - run:
           name: Run Tests
-          command: dotnet test --logger "txr;logfilename=result.xml" --results-directory ./test-results
+          command: dotnet test --logger "trx;logfilename=result.xml" --results-directory ./test-results
       - run:
           name: Run Terminal App
           command: dotnet run -p app-terminal
