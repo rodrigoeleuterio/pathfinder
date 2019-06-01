@@ -21,17 +21,15 @@ jobs:
       
       - run:
           name: Run Tests
-          command: dotnet test --no-build --logger "trx;LogFileName=result.trx" --results-directory ../test-results
+          command: 
+              dotnet test --no-build --logger "trx;LogFileName=result.trx" --results-directory ../test-results
               
       - run:
           name: Install trx2junit
           command: |
               dotnet tool install -g trx2junit
               export PATH="$PATH:/root/.dotnet/tools"
-              
-      - run:
-          name: Convert trx2junit        
-          command: trx2junit test-results/*.trx
+              trx2junit test-results/*.trx
       
       - run:
           name: Run Terminal App
