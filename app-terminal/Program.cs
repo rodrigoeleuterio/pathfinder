@@ -7,7 +7,7 @@ namespace Pathfinder.App.Terminal
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(HelloWorld.Message);
+            Console.WriteLine(new HelloWorld().CreateMessage(false, "Rodrigo"));
         }
     }
 }
