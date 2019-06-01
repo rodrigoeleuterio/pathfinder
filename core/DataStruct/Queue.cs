@@ -8,7 +8,7 @@
         public bool IsEmpty => Count == 0;
         public void Clear() => queue.Clear();
         public T Draw() => queue.Dequeue();
-        public void Put(T value) => queue.Enqueue(value);     
-        public T ViewNext() => queue.Peek();        
+        public void Put(T value) => queue.Clear();// queue.Enqueue(value);     
+        public T ViewNext() => queue.Peek();
     }
 }
