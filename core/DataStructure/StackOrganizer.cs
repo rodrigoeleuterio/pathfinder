@@ -1,8 +1,10 @@
-﻿namespace Pathfinder.Core.DataStruct
+﻿using System.Collections.Generic;
+
+namespace Pathfinder.Core.DataStructure
 {
-    public class Stack<T> : IOrganizer<T>
+    public class StackOrganizer<T> : IOrganizer<T>
     {
-        private readonly System.Collections.Generic.Stack<T> stack = new System.Collections.Generic.Stack<T>();
+        private readonly Stack<T> stack = new Stack<T>();
 
         public int Count => stack.Count;
         public bool IsEmpty => stack.Count == 0;

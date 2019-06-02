@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pathfinder.Core.DataStruct
+namespace Pathfinder.Core.DataStructure
 {
-    public class Raffle<T> : IOrganizer<T>
+    public class RaffleOrganizer<T> : IOrganizer<T>
     {
         private readonly Random rnd = new Random();
         private readonly IList<T> list = new List<T>();
@@ -37,7 +37,7 @@ namespace Pathfinder.Core.DataStruct
 
         public T ViewNext()
         {
-            if (IsEmpty) throw new InvalidOperationException();
+            if (IsEmpty) throw new InvalidOperationException("Raffle empty.");
             return list[last];
         }
 
@@ -46,8 +46,8 @@ namespace Pathfinder.Core.DataStruct
         private void CalculateLastIndex() => last = Count - 1;
 
         /// <summary>
-        /// Sorteia um index da lista e troca o valor com a ultima posição.
-        /// É mais rápido remover o último elemento de uma lista, pois não há reindexização dos elementos.
+        /// Sort a index and change the index value with the last position value.
+        /// It´s fastier to remove the last element of list.
         /// </summary>
         private void Sort()
         {

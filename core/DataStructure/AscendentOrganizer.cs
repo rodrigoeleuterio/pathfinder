@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pathfinder.Core.DataStruct
+namespace Pathfinder.Core.DataStructure
 {
-    public class PriorityQueue<T> : IOrganizer<T> where T: IPriority
+    public class AscendentOrganizer<T> : IOrganizer<T> where T: IPriority
     {
         private readonly SortedDictionary<int, IOrganizer<T>> basket = new SortedDictionary<int, IOrganizer<T>>();
         private int next = int.MaxValue;
@@ -21,6 +21,7 @@ namespace Pathfinder.Core.DataStruct
 
         public T Draw()
         {
+            if (IsEmpty) throw new InvalidOperationException("Organizer is empty.");
             var value = NextBasket.Draw();
             RemoveItem();
             DecrementCount();
@@ -33,7 +34,11 @@ namespace Pathfinder.Core.DataStruct
             IncrementCount();
         }
 
-        public T ViewNext() => NextBasket.ViewNext();
+        public T ViewNext()
+        {
+            if (IsEmpty) throw new InvalidOperationException("Organizer is empty.");
+            return NextBasket.ViewNext();
+        }
 
         private IOrganizer<T> NextBasket { get => basket[next]; }
 
@@ -59,9 +64,9 @@ namespace Pathfinder.Core.DataStruct
             FindNextIndex();
         }        
         
-        private static Queue<T> CreateQueue(T value)
+        private static QueueOrganizer<T> CreateQueue(T value)
         {
-            var queue = new Queue<T>();
+            var queue = new QueueOrganizer<T>();
             queue.Put(value);
             return queue;
         }

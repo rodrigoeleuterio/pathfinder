@@ -1,4 +1,4 @@
-﻿namespace Pathfinder.Core.DataStruct
+﻿namespace Pathfinder.Core.DataStructure
 {
     public interface IOrganizer<T>
     {

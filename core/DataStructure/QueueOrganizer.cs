@@ -1,8 +1,10 @@
-﻿namespace Pathfinder.Core.DataStruct
+﻿using System.Collections.Generic;
+
+namespace Pathfinder.Core.DataStructure
 {
-    public class Queue<T> : IOrganizer<T>
+    public class QueueOrganizer<T> : IOrganizer<T>
     {
-        private readonly System.Collections.Generic.Queue<T> queue = new System.Collections.Generic.Queue<T>();
+        private readonly Queue<T> queue = new Queue<T>();
 
         public int Count => queue.Count;
         public bool IsEmpty => Count == 0;
