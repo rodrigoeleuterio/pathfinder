@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Pathfinder.Core.Utility
+﻿namespace Genesis.Core
 {
-    public static class Numbers
+    public static class Factorial
     {
         private static readonly decimal[] factorials = new decimal[28];
 
-        static Numbers()
+        static Factorial()
         {
             CalculateFactorials(27);
         }

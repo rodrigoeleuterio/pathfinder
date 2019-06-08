@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "terminal", "terminal\termin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "organizer.xunit", "organizer.xunit\organizer.xunit.csproj", "{B7C8C46B-E566-4CE8-8F95-32221B60EAC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "puzzle", "puzzle\puzzle.csproj", "{B15261B3-037E-47C1-9666-5052C2F2CF57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "slidingpuzzle", "slidingpuzzle\slidingpuzzle.csproj", "{B15261B3-037E-47C1-9666-5052C2F2CF57}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pathfinder", "pathfinder\pathfinder.csproj", "{F40136B8-5D1A-48C5-8FB7-D02DAD362141}"
 EndProject

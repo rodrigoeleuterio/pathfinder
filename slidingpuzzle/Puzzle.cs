@@ -1,13 +1,13 @@
-﻿using Pathfinder.Core;
-using Pathfinder.Core.Utility;
+﻿using Genesis.Core;
+using Genesis.Pathfinder;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace PuzzleGame
+namespace Genesis.SlidingPuzzle
 {
-    public class Puzzle : IEnvironment<PuzzleMovement>
+    public class Puzzle : IEnvironment<PuzzleRoute>
     {
         private delegate void PuzzleProcess(int x, int y);
 
@@ -15,13 +15,13 @@ namespace PuzzleGame
         private const int MAX = SIZE - 1;
         private const int AREA = SIZE * SIZE;
 
-        private readonly byte[,] arrange;
+        private readonly byte[,] map;
         private int hashcode = 0;
         private Point zero;
 
         public Puzzle(byte[,] start = null)
         {
-            arrange = new byte[SIZE, SIZE];
+            map = new byte[SIZE, SIZE];
             Reset(start);
         }
 
@@ -30,18 +30,18 @@ namespace PuzzleGame
             hashcode = puzzle.hashcode;
             zero = new Point(puzzle.zero.X, puzzle.zero.Y);
 
-            arrange = new byte[SIZE, SIZE];
-            Loop((x, y) => arrange[x, y] = puzzle.arrange[x, y]);
+            map = new byte[SIZE, SIZE];
+            Loop((x, y) => map[x, y] = puzzle.map[x, y]);
 
-            Movements = new List<PuzzleMovement>();
-            foreach (var move in puzzle.Movements) Movements.Add((PuzzleMovement) move.Clone());           
+            Movements = new List<PuzzleRoute>();
+            foreach (var move in puzzle.Movements) Movements.Add((PuzzleRoute) move.Clone());           
         }
 
 
         /**
          * ## PROPERTIES ##
          **/
-        public List<PuzzleMovement> Movements { get; private set; }
+        public List<PuzzleRoute> Movements { get; private set; }
 
 
         /**
@@ -50,12 +50,12 @@ namespace PuzzleGame
         #region methods
         public bool Move(int index) => Move(Movements.FirstOrDefault(m => m.Index == index));
 
-        public bool Move(PuzzleMovement movement)
+        public bool Move(PuzzleRoute movement)
         {
             if (IsNotValidMovement(movement)) return false;
 
-            arrange[movement.To.X, movement.To.Y] = arrange[movement.From.X, movement.From.Y];
-            arrange[movement.From.X, movement.From.Y] = 0;
+            map[movement.To.X, movement.To.Y] = map[movement.From.X, movement.From.Y];
+            map[movement.From.X, movement.From.Y] = 0;
             zero = movement.From;
 
             CalculateHashCode();
@@ -68,7 +68,7 @@ namespace PuzzleGame
         {
             for (int i = SIZE - 1; i >= 0; i--)
             {
-                Console.WriteLine($"[{arrange[i, 0]}] [{arrange[i, 1]}] [{arrange[i, 2]}]");
+                Console.WriteLine($"[{map[i, 0]}] [{map[i, 1]}] [{map[i, 2]}]");
             }
 
             Console.WriteLine();
@@ -89,8 +89,8 @@ namespace PuzzleGame
         public bool Equals(Puzzle puzzle)
         {
             if (HashNotEqual(puzzle.hashcode)) return false;
-            if (DimensionsNotEquals(puzzle.arrange)) return false;
-            return Equals(puzzle.arrange);
+            if (DimensionsNotEquals(puzzle.map)) return false;
+            return Equals(puzzle.map);
         }
         #endregion
 
@@ -114,13 +114,13 @@ namespace PuzzleGame
             CalculateMoves();
         }
 
-        private bool Equals(byte[,] arrange)
+        private bool Equals(byte[,] map)
         {
             for (int x = 0; x < SIZE; x++)
             {
                 for (int y = 0; y < SIZE; y++)
                 {
-                    if (this.arrange[x, y] != arrange[x, y]) return false;
+                    if (this.map[x, y] != map[x, y]) return false;
                 }
             }
             return true;
@@ -128,13 +128,13 @@ namespace PuzzleGame
 
         private bool HashNotEqual(int hashcode) => this.hashcode != hashcode;
 
-        private bool DimensionsNotEquals(byte[,] arrange) => this.arrange.GetLength(0) != arrange.GetLength(0) || this.arrange.GetLength(1) != arrange.GetLength(1);
+        private bool DimensionsNotEquals(byte[,] map) => this.map.GetLength(0) != map.GetLength(0) || this.map.GetLength(1) != map.GetLength(1);
 
-        private bool IsNotValidMovement(PuzzleMovement move) => move == null || !IsValid(move.From) || !IsValid(move.To) || move.ManhattanDistance > 1 || !zero.Equals(move.To);
+        private bool IsNotValidMovement(PuzzleRoute move) => move == null || !IsValid(move.From) || !IsValid(move.To) || move.ManhattanDistance > 1 || !zero.Equals(move.To);
 
         private void CalculateMoves()
         {
-            Movements = new List<PuzzleMovement>();
+            Movements = new List<PuzzleRoute>();
             AddMovement(new Point(zero.X, zero.Y + 1));
             AddMovement(new Point(zero.X, zero.Y - 1));
             AddMovement(new Point(zero.X + 1, zero.Y));
@@ -143,13 +143,13 @@ namespace PuzzleGame
 
         private void AddMovement(Point from)
         {
-            if (IsValid(from)) Movements.Add(new PuzzleMovement() { From = from, To = zero, Index = arrange[from.X, from.Y] });
+            if (IsValid(from)) Movements.Add(new PuzzleRoute() { From = from, To = zero, Index = map[from.X, from.Y] });
         }
 
         private static bool IsValid(Point point) => point.X.Between(0, MAX) && point.Y.Between(0, MAX);
 
         private void SetValue(int x, int y, int value) {
-            arrange[x, y] = (byte) value;
+            map[x, y] = (byte) value;
             if (value == 0) zero = new Point() { X = x, Y = y };
         }
 
@@ -173,13 +173,13 @@ namespace PuzzleGame
             for (int i = 0; i < AREA; i++)
             {
                 var factor = AREA - i - 1;
-                hashcode += normalized[i] * (int)Numbers.GetFactorial(factor);
+                hashcode += normalized[i] * (int)Factorial.GetFactorial(factor);
             }
         }
 
         private bool NormalizeNumberToCalculateHash(int x, int y, int[] normalized)
         {
-            var value = arrange[x, y];
+            var value = map[x, y];
             var index = GetIndex(x, y);
             normalized[index] = value - index;
             for (int j = index - 1; j >= 0; j--)

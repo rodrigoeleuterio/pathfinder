@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pathfinder.Core
+﻿namespace Genesis.Pathfinder
 {
     public class Node<T, E> where T : IEnvironment<E>
     {

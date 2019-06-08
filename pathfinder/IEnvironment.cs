@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pathfinder.Core
+namespace Genesis.Pathfinder
 {
     public interface IEnvironment<T> : ICloneable
     {

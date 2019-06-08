@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pathfinder.Core.DataStructure
+namespace Genesis.Organizer
 {
     public class RaffleOrganizer<T> : IOrganizer<T>
     {

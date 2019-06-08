@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Pathfinder.Core.DataStructure
+namespace Genesis.Organizer
 {
     public class QueueOrganizer<T> : IOrganizer<T>
     {

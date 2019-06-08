@@ -1,22 +1,23 @@
-﻿using PuzzleGame;
+﻿using Genesis.SlidingPuzzle;
+using Genesis.SlidingPuzzle.AI;
 using System;
 
-namespace Pathfinder.App.Terminal
+namespace Genesis.Terminal
 {
     class Program
     {
-        private static byte[,] arrange;
+        private static byte[,] startMap;
 
         static void Main(string[] args)
         {
-            arrange = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } };
-            //var start = new Puzzle(new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } });
-            var start = new Puzzle(arrange);
+            startMap = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } };
+
+            var start = new Puzzle(startMap);
             var end = new Puzzle();
 
-            var solver = new PuzzleSolver();
+            var analizer = new PuzzleAnalizer();
 
-            var node = solver.SearchByExtension(start, end);
+            var node = analizer.SearchByExtension(start, end);
 
             Console.WriteLine($"Solved: {node != null}");
             if (node != null)
@@ -37,7 +38,7 @@ namespace Pathfinder.App.Terminal
 
         private static void Game()
         {
-            Puzzle puzzle = new Puzzle(arrange);
+            Puzzle puzzle = new Puzzle(startMap);
             int move;
             do
             {

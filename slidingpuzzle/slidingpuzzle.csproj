@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>PuzzleGame</RootNamespace>
-    <AssemblyName>puzzle.game</AssemblyName>
+    <RootNamespace>Genesis.SlidingPuzzle</RootNamespace>
+    <AssemblyName>genesis.slidingpuzzle</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\core\core.csproj" />
     <ProjectReference Include="..\pathfinder\pathfinder.csproj" />
   </ItemGroup>
 

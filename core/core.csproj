@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Pathfinder.Core</RootNamespace>
-    <AssemblyName>pathfinder.core</AssemblyName>
+    <RootNamespace>Ganesis.Core</RootNamespace>
+    <AssemblyName>genesis.core</AssemblyName>
   </PropertyGroup>
 
 </Project>

@@ -1,11 +1,9 @@
-﻿using Pathfinder.Core.DataStructure;
-using System;
+﻿using Genesis.Organizer;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Pathfinder.Core
+namespace Genesis.Pathfinder
 {
-    public abstract class Solver<N, T, E> where N: Node<T, E> where T: IEnvironment<E>
+    public abstract class Analizer<N, T, E> where N: Node<T, E> where T: IEnvironment<E>
     {
         protected abstract N GetNodeInstance();
         

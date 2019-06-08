@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 
-namespace PuzzleGame
+namespace Genesis.SlidingPuzzle
 {
-    public class PuzzleMovement : ICloneable
+    public class PuzzleRoute : ICloneable
     {
-        public PuzzleMovement() { }
+        public PuzzleRoute() { }
 
-        private PuzzleMovement(PuzzleMovement puzzle)
+        private PuzzleRoute(PuzzleRoute puzzle)
         {
             From = new Point(puzzle.From.X, puzzle.From.Y);
             To = new Point(puzzle.To.X, puzzle.To.Y);
@@ -28,6 +28,6 @@ namespace PuzzleGame
          **/
         public int ManhattanDistance { get => Math.Abs(To.X - From.X) + Math.Abs(To.Y - From.Y); }
 
-        public object Clone() => new PuzzleMovement(this);
+        public object Clone() => new PuzzleRoute(this);
     }
 }

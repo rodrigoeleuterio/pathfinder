@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>genesis.pathfinder</AssemblyName>
+    <RootNamespace>Genesis.Pathfinder</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\core\core.csproj" />
-    <ProjectReference Include="..\organizer.core\organizer.csproj" />
+    <ProjectReference Include="..\organizer\organizer.csproj" />
   </ItemGroup>
 
 </Project>

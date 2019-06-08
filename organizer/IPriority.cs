@@ -1,4 +1,4 @@
-﻿namespace Pathfinder.Core.DataStructure
+﻿namespace Genesis.Organizer
 {
     public interface IPriority
     {

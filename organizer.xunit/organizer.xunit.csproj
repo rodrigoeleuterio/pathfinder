@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>Pathfinder.Test</RootNamespace>
+    <RootNamespace>Genesis.Organizer.Xunit</RootNamespace>
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>pathfinder.test</AssemblyName>
+    <AssemblyName>genesis.organizer.xunit</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\organizer.core\organizer.csproj" />
+    <ProjectReference Include="..\organizer\organizer.csproj" />
   </ItemGroup>
 
 </Project>

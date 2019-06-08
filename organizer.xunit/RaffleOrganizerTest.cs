@@ -1,8 +1,7 @@
-﻿using Pathfinder.Core.DataStructure;
-using System;
+﻿using System;
 using Xunit;
 
-namespace Pathfinder.Test.Core.DataStructure
+namespace Genesis.Organizer.Xunit
 {
     public class RaffleOrganizerTest
     {
