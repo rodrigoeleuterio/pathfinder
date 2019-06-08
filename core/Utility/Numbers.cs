@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pathfinder.Core
+namespace Pathfinder.Core.Utility
 {
     public static class Numbers
     {
