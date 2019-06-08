@@ -5,11 +5,15 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core", "core\core.csproj", "{4DFDC6FF-C84E-4F41-A3E3-5C3F8766C4E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app-terminal", "app-terminal\app-terminal.csproj", "{2CBC39CE-54BD-4E98-81A9-99B6FE562C49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "terminal", "terminal\terminal.csproj", "{2CBC39CE-54BD-4E98-81A9-99B6FE562C49}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unit-tests-core", "unit-tests-core\unit-tests-core.csproj", "{B7C8C46B-E566-4CE8-8F95-32221B60EAC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "organizer.xunit", "organizer.xunit\organizer.xunit.csproj", "{B7C8C46B-E566-4CE8-8F95-32221B60EAC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "puzzle-game", "puzzle-game\puzzle-game.csproj", "{B15261B3-037E-47C1-9666-5052C2F2CF57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "puzzle", "puzzle\puzzle.csproj", "{B15261B3-037E-47C1-9666-5052C2F2CF57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pathfinder", "pathfinder\pathfinder.csproj", "{F40136B8-5D1A-48C5-8FB7-D02DAD362141}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "organizer", "organizer\organizer.csproj", "{09D917FF-A509-4BFA-A60D-11856975CFE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{B15261B3-037E-47C1-9666-5052C2F2CF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B15261B3-037E-47C1-9666-5052C2F2CF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B15261B3-037E-47C1-9666-5052C2F2CF57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F40136B8-5D1A-48C5-8FB7-D02DAD362141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40136B8-5D1A-48C5-8FB7-D02DAD362141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40136B8-5D1A-48C5-8FB7-D02DAD362141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40136B8-5D1A-48C5-8FB7-D02DAD362141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09D917FF-A509-4BFA-A60D-11856975CFE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D917FF-A509-4BFA-A60D-11856975CFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D917FF-A509-4BFA-A60D-11856975CFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D917FF-A509-4BFA-A60D-11856975CFE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
