@@ -32,11 +32,7 @@ jobs:
               trx2junit test-results/*.trx
           when: always
       
-      - run:
-          name: Run Terminal App
-          command: 
-              dotnet run -p app-terminal
-                     
+                  
       - store_test_results:
           path: test-results
           
