@@ -7,9 +7,11 @@ namespace Genesis.Terminal
     class Program
     {
         private static byte[,] startMap;
+        private static PuzzleNode node;
 
         static void Main(string[] args)
         {
+            Console.Clear();
             startMap = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } };
 
             var start = new Puzzle(startMap);
@@ -17,23 +19,35 @@ namespace Genesis.Terminal
 
             var analizer = new PuzzleAnalizer();
 
-            var node = analizer.SearchByExtension(start, end);
+            var mode = (args.Length > 0) ? args[0] : "";
+
+            switch (mode) {
+                case "deepth": 
+                    node = analizer.DepthSearch(start, end);
+                    break;
+                default: 
+                    node = analizer.BreadthSearch(start, end);
+                    break;
+            }
 
             Console.WriteLine($"Solved: {node != null}");
+            Game();
+        }
+
+        private static void PrintMovement() {
             if (node != null)
             {
                 Console.WriteLine($"Movements: {node.Deep}");
 
-                while (node != null && node.Deep > 0)
+                var parent = node;
+                while (parent != null && parent.Deep > 0)
                 {
-                    Console.Write($"[{node.Movement.Index}]");
-                    node = (PuzzleNode) node.Parent;
+                    Console.Write($"[{parent.Movement.Index}]");
+                    parent = (PuzzleNode) parent.Parent;
                 }
 
                 Console.WriteLine();
             }
-
-            Game();
         }
 
         private static void Game()
@@ -42,6 +56,7 @@ namespace Genesis.Terminal
             int move;
             do
             {
+                PrintMovement();
                 puzzle.Print();
 
                 move = ReadMove();

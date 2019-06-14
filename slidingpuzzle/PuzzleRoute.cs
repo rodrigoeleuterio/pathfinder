@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using Genesis.Pathfinder;
 
 namespace Genesis.SlidingPuzzle
 {
-    public class PuzzleRoute : ICloneable
+    public class PuzzleRoute : IRoute
     {
         public PuzzleRoute() { }
 
@@ -27,6 +28,8 @@ namespace Genesis.SlidingPuzzle
          * ## METHODS ##
          **/
         public int ManhattanDistance { get => Math.Abs(To.X - From.X) + Math.Abs(To.Y - From.Y); }
+
+        public int Cost => 1;
 
         public object Clone() => new PuzzleRoute(this);
     }

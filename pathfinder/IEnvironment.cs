@@ -5,7 +5,7 @@ namespace Genesis.Pathfinder
 {
     public interface IEnvironment<T> : ICloneable
     {
-        List<T> Movements { get; }
-        bool Move(T move);
+        List<T> Routes { get; }
+        bool Move(T route);
     }
 }

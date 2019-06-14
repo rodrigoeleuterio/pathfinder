@@ -9,54 +9,77 @@ namespace Genesis.SlidingPuzzle
 {
     public class Puzzle : IEnvironment<PuzzleRoute>
     {
-        private delegate void PuzzleProcess(int x, int y);
+        private delegate void PuzzleProcess(Point position);
 
         private const int SIZE = 3;
         private const int MAX = SIZE - 1;
         private const int AREA = SIZE * SIZE;
 
-        private readonly byte[,] map;
-        private int hashcode = 0;
-        private Point zero;
+        private readonly static Point[] points = new Point[] { new Point(0, 0),  new Point(0, 1), new Point(0, 2), new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 0), new Point(2, 1), new Point(2, 2) };
 
-        public Puzzle(byte[,] start = null)
+        private readonly byte[,] map;
+        private readonly Point[] mapIndexed;
+        private int hashcode = 0;
+        private Point Zero { get => mapIndexed[0]; }
+
+        public Puzzle(byte[,] startMap = null)
         {
             map = new byte[SIZE, SIZE];
-            Reset(start);
+            if (startMap == null)
+            {
+                startMap = new byte[,] {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+            }
+            Reset(startMap);
         }
 
         private Puzzle(Puzzle puzzle)
         {
             hashcode = puzzle.hashcode;
-            zero = new Point(puzzle.zero.X, puzzle.zero.Y);
 
             map = new byte[SIZE, SIZE];
-            Loop((x, y) => map[x, y] = puzzle.map[x, y]);
+            for (int i = 0; i < AREA; i++) 
+            {
+                var position = points[i];
+                SetValue(position, puzzle.map[position.X, position.Y]);
+            }
 
-            Movements = new List<PuzzleRoute>();
-            foreach (var move in puzzle.Movements) Movements.Add((PuzzleRoute) move.Clone());           
+            Routes = new List<PuzzleRoute>();
+            foreach (var move in puzzle.Routes) Routes.Add((PuzzleRoute) move.Clone());           
         }
 
+        public int CalculateDistance(Puzzle objective) {
+            int total = 0;
+            for (int i = 0; i < AREA; i++) 
+            {
+                var route = new PuzzleRoute() {
+                    From = mapIndexed[i],
+                    To = objective.mapIndexed[i]
+                };
+
+                total += route.ManhattanDistance;
+            }
+            
+            return total;
+        }
 
         /**
          * ## PROPERTIES ##
          **/
-        public List<PuzzleRoute> Movements { get; private set; }
+        public List<PuzzleRoute> Routes { get; private set; }
 
 
         /**
          * ## METHODS ##
          **/
         #region methods
-        public bool Move(int index) => Move(Movements.FirstOrDefault(m => m.Index == index));
+        public bool Move(int index) => Move(Routes.FirstOrDefault(m => m.Index == index));
 
         public bool Move(PuzzleRoute movement)
         {
             if (IsNotValidMovement(movement)) return false;
 
-            map[movement.To.X, movement.To.Y] = map[movement.From.X, movement.From.Y];
-            map[movement.From.X, movement.From.Y] = 0;
-            zero = movement.From;
+            SetValue(movement.To, map[movement.From.X, movement.From.Y]);
+            SetValue(movement.From, 0);
 
             CalculateHashCode();
             CalculateMoves();
@@ -75,9 +98,9 @@ namespace Genesis.SlidingPuzzle
             Console.WriteLine("Moves:");
 
 
-            for (int i = 0; i < Movements.Count; i++)
+            for (int i = 0; i < Routes.Count; i++)
             {
-                var move = Movements[i];
+                var move = Routes[i];
                 Console.WriteLine($"{i}: [{move.Index}] <- [{move.From.X}, {move.From.Y}] ");
             }
         }
@@ -99,29 +122,24 @@ namespace Genesis.SlidingPuzzle
          * ## PRIVATE METHODS ##
          **/
         #region private
-        private void Reset(byte[,] start)
+        private void Reset(byte[,] map)
         {
-            bool isDefault = start == null;
-            if (isDefault)
+            for (int i = 0; i < AREA; i++) 
             {
-                Loop((x, y) => SetValue(x, y, GetIndex(x, y)));
+                var position = points[i];
+                SetValue(position, i);
             }
-            else
-            {
-                Loop((x, y) => SetValue(x, y, start[x, y]));
-            }           
+            
             CalculateHashCode();
             CalculateMoves();
         }
 
         private bool Equals(byte[,] map)
         {
-            for (int x = 0; x < SIZE; x++)
+            for (int i = 0; i < AREA; i++) 
             {
-                for (int y = 0; y < SIZE; y++)
-                {
-                    if (this.map[x, y] != map[x, y]) return false;
-                }
+                var position = points[i];
+                if (this.map[position.X, position.Y] != map[position.X, position.Y]) return false;
             }
             return true;
         }
@@ -130,27 +148,27 @@ namespace Genesis.SlidingPuzzle
 
         private bool DimensionsNotEquals(byte[,] map) => this.map.GetLength(0) != map.GetLength(0) || this.map.GetLength(1) != map.GetLength(1);
 
-        private bool IsNotValidMovement(PuzzleRoute move) => move == null || !IsValid(move.From) || !IsValid(move.To) || move.ManhattanDistance > 1 || !zero.Equals(move.To);
+        private bool IsNotValidMovement(PuzzleRoute move) => move == null || !IsValid(move.From) || !IsValid(move.To) || move.ManhattanDistance > 1 || !Zero.Equals(move.To);
 
         private void CalculateMoves()
         {
-            Movements = new List<PuzzleRoute>();
-            AddMovement(new Point(zero.X, zero.Y + 1));
-            AddMovement(new Point(zero.X, zero.Y - 1));
-            AddMovement(new Point(zero.X + 1, zero.Y));
-            AddMovement(new Point(zero.X - 1, zero.Y));
+            Routes = new List<PuzzleRoute>();
+            AddMovement(new Point(Zero.X, Zero.Y + 1));
+            AddMovement(new Point(Zero.X, Zero.Y - 1));
+            AddMovement(new Point(Zero.X + 1, Zero.Y));
+            AddMovement(new Point(Zero.X - 1, Zero.Y));
         }
 
         private void AddMovement(Point from)
         {
-            if (IsValid(from)) Movements.Add(new PuzzleRoute() { From = from, To = zero, Index = map[from.X, from.Y] });
+            if (IsValid(from)) Routes.Add(new PuzzleRoute() { From = from, To = Zero, Index = map[from.X, from.Y] });
         }
 
         private static bool IsValid(Point point) => point.X.Between(0, MAX) && point.Y.Between(0, MAX);
 
-        private void SetValue(int x, int y, int value) {
-            map[x, y] = (byte) value;
-            if (value == 0) zero = new Point() { X = x, Y = y };
+        private void SetValue(Point position, int value) {
+            map[position.X, position.Y] = (byte) value;
+            mapIndexed[value] = position;
         }
 
         private void CalculateHashCode()
@@ -162,7 +180,16 @@ namespace Genesis.SlidingPuzzle
         private int[] Normalize()
         {
             int[] normalized = new int[AREA];
-            Loop((x, y) => NormalizeNumberToCalculateHash(x, y, normalized));
+            for (int i = 0; i < AREA; i++) 
+            {
+                var position = mapIndexed[i];
+                var value = map[position.X, position.Y];
+                normalized[i] = value - i;
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    if (normalized[j] > value) normalized[i]++;
+                }
+            }
             return normalized;
         }
 
@@ -177,30 +204,7 @@ namespace Genesis.SlidingPuzzle
             }
         }
 
-        private bool NormalizeNumberToCalculateHash(int x, int y, int[] normalized)
-        {
-            var value = map[x, y];
-            var index = GetIndex(x, y);
-            normalized[index] = value - index;
-            for (int j = index - 1; j >= 0; j--)
-            {
-                if (normalized[j] > value) normalized[index]++;
-            }
-            return true;
-        }
-
-        private void ClearHash() => hashcode = 0;
-
-        private void Loop(PuzzleProcess exec)
-        {
-            for (int x = 0; x < SIZE; x++)
-            {
-                for (int y = 0; y < SIZE; y++)
-                {
-                    exec(x, y);
-                }
-            }
-        }
+        private void ClearHash() => hashcode = 0;       
 
         public object Clone() => new Puzzle(this);
         #endregion

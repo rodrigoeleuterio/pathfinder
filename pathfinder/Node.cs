@@ -1,6 +1,8 @@
-﻿namespace Genesis.Pathfinder
+﻿using Genesis.Organizer;
+
+namespace Genesis.Pathfinder
 {
-    public class Node<T, E> where T : IEnvironment<E>
+    public abstract class Node<T, E> : IPriority where T : IEnvironment<E>
     {
         /**
          * ## PROPERTIES ## 
@@ -10,6 +12,7 @@
         public T State { get; set; }
         public Node<T, E> Parent { get; set; }
         public E Movement { get; set; }
+        public abstract int PriorityValue { get; set; }
 
         public bool IsNotMovementInLoop(T state)
         {
