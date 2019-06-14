@@ -1,3 +1,6 @@
+/.coverlet
+/.vscode
 /.vs
 **/bin
 **/obj
+/coverlet.bat
