@@ -13,34 +13,37 @@ namespace Genesis.Terminal
         static void Main(string[] args)
         {
             Console.Clear();
-            //startMap = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } }; // 18
-            startMap = new byte[3, 3] { { 1, 5, 0 }, { 7, 4, 3 }, { 8, 2, 6 } }; // 31
+            startMap = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } }; // 18
+            //startMap = new byte[3, 3] { { 1, 5, 0 }, { 7, 4, 3 }, { 8, 2, 6 } }; // 31
 
             var start = new Puzzle(startMap);
             var end = new Puzzle();
 
             var analizer = new PuzzleAnalizer();
-            analizer.OnFinished += Analizer_OnFinished;
+            analizer.OnLocateTarget += Analizer_OnFinished;
 
-            var mode = (args.Length > 0) ? args[0] : "";
-
-            switch (mode) {
-                case "deepth": 
-                    node = analizer.SearchDeepth(start, end);
-                    break;
-                case "greedy":
-                    node = analizer.SearchGreedy(start, end);
-                    break;
-                case "heuristic":
-                    node = analizer.SearchByHeuristic(start, end);
-                    break;
-                default: 
-                    node = analizer.SearchBreadth(start, end);
-                    break;
-            }
+            node = Search(analizer, start, end, (args.Length > 0) ? args[0] : "");
 
             Console.WriteLine($"Solved: {node != null}");
             Game();
+        }
+
+        private static PuzzleNode Search(PuzzleAnalizer analizer, Puzzle start, Puzzle end, string mode) 
+        {
+            switch (mode) 
+            {
+                case "breadth":
+                default:
+                    return analizer.SearchBreadth(start, end);
+                case "deepth": 
+                    return analizer.SearchDeepth(start, end);
+                case "uniformcost": 
+                    return analizer.SearchByUniformCost(start, end);
+                case "greedy":
+                    return analizer.SearchGreedy(start, end);
+                case "a*":
+                    return analizer.SearchAsterisk(start, end);
+            }
         }
 
         private static void Analizer_OnFinished(string obj)
@@ -64,6 +67,24 @@ namespace Genesis.Terminal
             }
         }
 
+        public static void Print(Puzzle puzzle)
+        {
+            for (int i = Puzzle.SIZE - 1; i >= 0; i--)
+            {
+                Console.WriteLine($"[{puzzle.map[i, 0]}] [{puzzle.map[i, 1]}] [{puzzle.map[i, 2]}]");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Moves:");
+
+
+            for (int i = 0; i < puzzle.Routes.Count; i++)
+            {
+                var move = puzzle.Routes[i];
+                Console.WriteLine($"{i}: [{move.Index}] <- [{move.From.X}, {move.From.Y}] ");
+            }
+        }
+
         private static void Game()
         {
             Puzzle puzzle = new Puzzle(startMap);
@@ -74,7 +95,7 @@ namespace Genesis.Terminal
 
                 Console.WriteLine(result);
                 PrintMovement();
-                puzzle.Print();
+                Print(puzzle);
 
                 move = ReadMove();
 

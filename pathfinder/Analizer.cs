@@ -6,7 +6,7 @@ namespace Genesis.Pathfinder
 {
     public abstract class Analizer<N, T, E> where N: Node<T, E> where T: IEnvironment<E> where E: IRoute
     {
-        public event Action<string> OnFinished;
+        public event Action<string> OnLocateTarget;
 
         protected abstract N CreateNodeInstance();
         protected T Objective { get; set; }
@@ -15,28 +15,39 @@ namespace Genesis.Pathfinder
         /**
          * ## METHODS ## 
          **/
-        protected abstract void SetHeuristic(string name = "cost");
-
         public N SearchBreadth(T start, T end)
         {
-            Objective = end;
             return Search(new QueueOrganizer<N>(), start, end);
         }
 
         public N SearchDeepth(T start, T end)
         {
-            Objective = end;
             return Search(new StackOrganizer<N>(), start, end);
         }
 
         public N SearchByUniformCost(T start, T end)
         {
-            Objective = end;
-            SetHeuristic("cost");
+            Heuristic = (node, objective) => node.Cost;
             return Search(new AscendentOrganizer<N>(), start, end);
         }
 
+        public N SearchGreedy(T start, T end)
+        {
+            Heuristic = (node, objective) => CalculateHeuristic(node, objective);
+            return Search(new AscendentOrganizer<N>(), start, end);
+        }
+
+        public N SearchAsterisk(T start, T end)
+        {
+            Heuristic = (node, objective) => CalculateHeuristic(node, objective) + node.Cost;
+            return Search(new AscendentOrganizer<N>(), start, end);
+        }
+
+        protected abstract int CalculateHeuristic(N node, T objective);
+
         protected N Search(IOrganizer<N> organizer, T start, T end) {
+            Objective = end;
+
             var timeStart = DateTime.Now;
             organizer.Put(CreateFirstNode(start));
 
@@ -50,7 +61,7 @@ namespace Genesis.Pathfinder
                 if (end.Equals(node.State))
                 {
                     var timeEnd = DateTime.Now;
-                    OnFinished?.Invoke($"nodes: {nodes} / interactions: {loops} / deep: {node.Deep} / elapse time: {timeEnd - timeStart}");
+                    OnLocateTarget?.Invoke($"nodes: {nodes} / interactions: {loops} / deep: {node.Deep} / elapse time: {timeEnd - timeStart}");
                     return node;
                 }
                 

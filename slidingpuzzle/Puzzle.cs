@@ -1,6 +1,5 @@
 ﻿using Genesis.Core;
 using Genesis.Pathfinder;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,14 +10,14 @@ namespace Genesis.SlidingPuzzle
     {
         private delegate void PuzzleProcess(Point position);
 
-        private const int SIZE = 3;
-        private const int MAX = SIZE - 1;
-        private const int AREA = SIZE * SIZE;
+        public const int SIZE = 3;
+        public const int MAX = SIZE - 1;
+        public const int AREA = SIZE * SIZE;
 
         private readonly static Point[] points = new Point[] { new Point(0, 0),  new Point(0, 1), new Point(0, 2), new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 0), new Point(2, 1), new Point(2, 2) };
 
-        private readonly byte[,] map;
-        private readonly Point[] mapIndexed = new Point[AREA];
+        public readonly byte[,] map;
+        public readonly Point[] mapIndexed = new Point[AREA];
         private int hashcode = 0;
         private Point Zero { get => mapIndexed[0]; }
 
@@ -47,38 +46,6 @@ namespace Genesis.SlidingPuzzle
             foreach (var move in puzzle.Routes) Routes.Add((PuzzleRoute) move.Clone());           
         }
 
-        public int CalculateDistance(Puzzle objective) {
-            int total = 0;
-            for (int i = 0; i < AREA; i++) 
-            {
-                var route = new PuzzleRoute() {
-                    From = mapIndexed[i],
-                    To = objective.mapIndexed[i]
-                };
-
-                total += route.ManhattanDistance;
-            }
-            
-            return total;
-        }
-
-        public int CalculateDistance2(Puzzle objective)
-        {
-            int total = 0;
-            for (int i = 0; i < AREA; i++)
-            {
-                var route = new PuzzleRoute()
-                {
-                    From = mapIndexed[i],
-                    To = objective.mapIndexed[i]
-                };
-
-                total += route.From != route.To ? 1 : 0;
-            }
-
-            return total;
-        }
-
         /**
          * ## PROPERTIES ##
          **/
@@ -102,24 +69,6 @@ namespace Genesis.SlidingPuzzle
             CalculateMoves();
 
             return true;
-        }
-        
-        public void Print()
-        {
-            for (int i = SIZE - 1; i >= 0; i--)
-            {
-                Console.WriteLine($"[{map[i, 0]}] [{map[i, 1]}] [{map[i, 2]}]");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Moves:");
-
-
-            for (int i = 0; i < Routes.Count; i++)
-            {
-                var move = Routes[i];
-                Console.WriteLine($"{i}: [{move.Index}] <- [{move.From.X}, {move.From.Y}] ");
-            }
         }
 
         public override int GetHashCode() => hashcode;
@@ -209,8 +158,6 @@ namespace Genesis.SlidingPuzzle
             }
             return normalized;
         }
-
-        private static int GetIndex(int x, int y) => x * SIZE + y;
 
         private void CalculateHash(int[] normalized)
         {

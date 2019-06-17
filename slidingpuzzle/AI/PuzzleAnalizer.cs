@@ -1,41 +1,26 @@
-﻿using Genesis.Organizer;
-using Genesis.Pathfinder;
-using System;
-using System.Collections.Generic;
+﻿using Genesis.Pathfinder;
 
 namespace Genesis.SlidingPuzzle.AI
 {
     public class PuzzleAnalizer : Analizer<PuzzleNode, Puzzle, PuzzleRoute>
     {
-        private static readonly Dictionary<string, Func<PuzzleNode, Puzzle, int>> heuristics;
-
-        static PuzzleAnalizer()
+        protected override int CalculateHeuristic(PuzzleNode node, Puzzle objective)
         {
-            heuristics = new Dictionary<string, Func<PuzzleNode, Puzzle, int>>()
+            Puzzle state = node.State;
+
+            int total = 0;
+            for (int i = 0; i < Puzzle.AREA; i++) 
             {
-                ["cost"] = (node, objective) => node.Cost,
-                ["greedy"] = (node, objective) => node.State.CalculateDistance(objective),
-                ["a*"] = (node, objective) => node.State.CalculateDistance(objective) + node.Cost
-            };
-        }
+                var route = new PuzzleRoute() 
+                {
+                    From = state.mapIndexed[i],
+                    To = objective.mapIndexed[i]
+                };
 
-        public PuzzleNode SearchGreedy(Puzzle start, Puzzle end)
-        {
-            Objective = end;
-            SetHeuristic("greedy");
-            return Search(new AscendentOrganizer<PuzzleNode>(), start, end);
-        }
-
-        public PuzzleNode SearchByHeuristic(Puzzle start, Puzzle end)
-        {
-            Objective = end;
-            SetHeuristic("a*");
-            return Search(new AscendentOrganizer<PuzzleNode>(), start, end);
-        }
-
-        protected override void SetHeuristic(string name = "cost")
-        {
-            Heuristic = heuristics[name];
+                total += route.ManhattanDistance;
+            }
+            
+            return total;
         }
 
         protected override PuzzleNode CreateNodeInstance() => new PuzzleNode();
