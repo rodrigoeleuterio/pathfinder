@@ -1,6 +1,7 @@
 ﻿using Genesis.Organizer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Genesis.Pathfinder
 {
@@ -8,6 +9,8 @@ namespace Genesis.Pathfinder
     {
         public event Action<string> OnLocateTarget;
 
+        private List<T> graph = new List<T>();
+        private bool graphMode  = false;
         protected abstract N CreateNodeInstance();
         protected T Objective { get; set; }
         protected Func<N, T, int> Heuristic { get; set; }
@@ -15,38 +18,39 @@ namespace Genesis.Pathfinder
         /**
          * ## METHODS ## 
          **/
-        public N SearchBreadth(T start, T end)
+        public N SearchBreadth(T start, T end, bool graphMode = false)
         {
-            return Search(new QueueOrganizer<N>(), start, end);
+            return Search(new QueueOrganizer<N>(), start, end, graphMode);
         }
 
-        public N SearchDeepth(T start, T end)
+        public N SearchDeepth(T start, T end, bool graphMode = false)
         {
-            return Search(new StackOrganizer<N>(), start, end);
+            return Search(new StackOrganizer<N>(), start, end, graphMode);
         }
 
-        public N SearchByUniformCost(T start, T end)
+        public N SearchByUniformCost(T start, T end, bool graphMode = false)
         {
             Heuristic = (node, objective) => node.Cost;
-            return Search(new AscendentOrganizer<N>(), start, end);
+            return Search(new AscendentOrganizer<N>(), start, end, graphMode);
         }
 
-        public N SearchGreedy(T start, T end)
+        public N SearchGreedy(T start, T end, bool graphMode = false)
         {
             Heuristic = (node, objective) => CalculateHeuristic(node, objective);
-            return Search(new AscendentOrganizer<N>(), start, end);
+            return Search(new AscendentOrganizer<N>(), start, end, graphMode);
         }
 
-        public N SearchAsterisk(T start, T end)
+        public N SearchAsterisk(T start, T end, bool graphMode = false)
         {
             Heuristic = (node, objective) => CalculateHeuristic(node, objective) + node.Cost;
-            return Search(new AscendentOrganizer<N>(), start, end);
+            return Search(new AscendentOrganizer<N>(), start, end, graphMode);
         }
 
         protected abstract int CalculateHeuristic(N node, T objective);
 
-        protected N Search(IOrganizer<N> organizer, T start, T end) {
-            Objective = end;
+        protected N Search(IOrganizer<N> organizer, T start, T end, bool graphMode) {
+            this.graphMode = graphMode;
+            Objective = end;           
 
             var timeStart = DateTime.Now;
             organizer.Put(CreateFirstNode(start));
@@ -57,6 +61,7 @@ namespace Genesis.Pathfinder
             {
                 loops++;
                 var node = organizer.Draw();
+                if (graphMode) graph.Add(node.State);
 
                 if (end.Equals(node.State))
                 {
@@ -83,7 +88,7 @@ namespace Genesis.Pathfinder
             foreach (var movement in node.State.Routes)
             {
                 var state = (T)node.State.Clone();
-                if (state.Move(movement) && node.IsNotMovementInLoop(state))
+                if (state.Move(movement) && (graphMode) ? !graph.Exists(m => m.Equals(state)) : node.IsNotMovementInLoop(state))
                 {
                     AddNewNodeInList(list, node, movement, state);
                 }

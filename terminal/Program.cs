@@ -22,27 +22,29 @@ namespace Genesis.Terminal
             var analizer = new PuzzleAnalizer();
             analizer.OnLocateTarget += Analizer_OnFinished;
 
-            node = Search(analizer, start, end, (args.Length > 0) ? args[0] : "");
+            var mode = (args.Length > 0) ? args[0] : "";
+            var graph = (args.Length > 1) ? args[1] == "graph-mode" : false;
+            node = Search(analizer, start, end, mode, graph);
 
             Console.WriteLine($"Solved: {node != null}");
             Game();
         }
 
-        private static PuzzleNode Search(PuzzleAnalizer analizer, Puzzle start, Puzzle end, string mode) 
+        private static PuzzleNode Search(PuzzleAnalizer analizer, Puzzle start, Puzzle end, string mode, bool graph) 
         {
             switch (mode) 
             {
                 case "breadth":
                 default:
-                    return analizer.SearchBreadth(start, end);
+                    return analizer.SearchBreadth(start, end, graph);
                 case "deepth": 
-                    return analizer.SearchDeepth(start, end);
+                    return analizer.SearchDeepth(start, end, graph);
                 case "uniformcost": 
-                    return analizer.SearchByUniformCost(start, end);
+                    return analizer.SearchByUniformCost(start, end, graph);
                 case "greedy":
-                    return analizer.SearchGreedy(start, end);
+                    return analizer.SearchGreedy(start, end, graph);
                 case "a*":
-                    return analizer.SearchAsterisk(start, end);
+                    return analizer.SearchAsterisk(start, end, graph);
             }
         }
 
