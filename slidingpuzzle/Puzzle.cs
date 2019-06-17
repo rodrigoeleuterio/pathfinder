@@ -18,7 +18,7 @@ namespace Genesis.SlidingPuzzle
         private readonly static Point[] points = new Point[] { new Point(0, 0),  new Point(0, 1), new Point(0, 2), new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 0), new Point(2, 1), new Point(2, 2) };
 
         private readonly byte[,] map;
-        private readonly Point[] mapIndexed;
+        private readonly Point[] mapIndexed = new Point[AREA];
         private int hashcode = 0;
         private Point Zero { get => mapIndexed[0]; }
 
@@ -59,6 +59,23 @@ namespace Genesis.SlidingPuzzle
                 total += route.ManhattanDistance;
             }
             
+            return total;
+        }
+
+        public int CalculateDistance2(Puzzle objective)
+        {
+            int total = 0;
+            for (int i = 0; i < AREA; i++)
+            {
+                var route = new PuzzleRoute()
+                {
+                    From = mapIndexed[i],
+                    To = objective.mapIndexed[i]
+                };
+
+                total += route.From != route.To ? 1 : 0;
+            }
+
             return total;
         }
 
@@ -122,12 +139,12 @@ namespace Genesis.SlidingPuzzle
          * ## PRIVATE METHODS ##
          **/
         #region private
-        private void Reset(byte[,] map)
+        private void Reset(byte[,] startMap)
         {
             for (int i = 0; i < AREA; i++) 
             {
                 var position = points[i];
-                SetValue(position, i);
+                SetValue(position, startMap[position.X, position.Y]);
             }
             
             CalculateHashCode();

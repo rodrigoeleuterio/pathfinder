@@ -8,30 +8,44 @@ namespace Genesis.Terminal
     {
         private static byte[,] startMap;
         private static PuzzleNode node;
+        private static string result;
 
         static void Main(string[] args)
         {
             Console.Clear();
-            startMap = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } };
+            //startMap = new byte[3, 3] { { 3, 2, 7 }, { 4, 8, 5 }, { 0, 1, 6 } }; // 18
+            startMap = new byte[3, 3] { { 1, 5, 0 }, { 7, 4, 3 }, { 8, 2, 6 } }; // 31
 
             var start = new Puzzle(startMap);
             var end = new Puzzle();
 
             var analizer = new PuzzleAnalizer();
+            analizer.OnFinished += Analizer_OnFinished;
 
             var mode = (args.Length > 0) ? args[0] : "";
 
             switch (mode) {
                 case "deepth": 
-                    node = analizer.DepthSearch(start, end);
+                    node = analizer.SearchDeepth(start, end);
+                    break;
+                case "greedy":
+                    node = analizer.SearchGreedy(start, end);
+                    break;
+                case "heuristic":
+                    node = analizer.SearchByHeuristic(start, end);
                     break;
                 default: 
-                    node = analizer.BreadthSearch(start, end);
+                    node = analizer.SearchBreadth(start, end);
                     break;
             }
 
             Console.WriteLine($"Solved: {node != null}");
             Game();
+        }
+
+        private static void Analizer_OnFinished(string obj)
+        {
+            result = obj;
         }
 
         private static void PrintMovement() {
@@ -56,26 +70,30 @@ namespace Genesis.Terminal
             int move;
             do
             {
+                Console.Clear();
+
+                Console.WriteLine(result);
                 PrintMovement();
                 puzzle.Print();
 
                 move = ReadMove();
 
+                if (move == 0) break;
+                if (move == -1) continue;
+
                 while (!puzzle.Move(move))
                 {
                     Console.WriteLine("Movement not allowed!");
-                    move = ReadMove();
                 }
-
-                Console.Clear();
             }
-            while (move > 0);
+            while (true);
         }
 
         private static int ReadMove()
         {
             Console.Write("Enter a number (press 0 to exit): ");
-            return int.Parse(Console.ReadLine());
+            string input = Console.ReadLine();
+            return int.TryParse(input, out int key) ? key : -1;
         }
     }
 }

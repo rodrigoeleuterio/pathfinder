@@ -77,7 +77,19 @@ namespace Genesis.Organizer
 
         private void DecrementCount() => Count -= 1;
 
-        private void FindNextIndex() => next = basket.Keys.GetEnumerator().Current;
+        private void FindNextIndex()
+        {
+            if (basket.Count == 0)
+            {
+                next = int.MaxValue;
+            }
+            else
+            {
+                var enumarator = basket.Keys.GetEnumerator();
+                enumarator.MoveNext();
+                next = enumarator.Current;
+            }
+        }
 
         private void FindNextIndex(int value) => next = Math.Min(next, value);
     }
