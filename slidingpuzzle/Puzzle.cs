@@ -11,14 +11,14 @@ namespace Eleutherius.Genesis.SlidingPuzzle
     {
         private delegate void PuzzleProcess(Point position);
 
-        private const int SIZE = 3;
-        private const int MAX = SIZE - 1;
-        private const int AREA = SIZE * SIZE;
+        public const int SIZE = 3;
+        public const int MAX = SIZE - 1;
+        public const int AREA = SIZE * SIZE;
 
         private readonly static Point[] points = new Point[] { new Point(0, 0),  new Point(0, 1), new Point(0, 2), new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 0), new Point(2, 1), new Point(2, 2) };
 
-        private readonly byte[,] map;
-        private readonly Point[] mapIndexed = new Point[AREA];
+        public readonly byte[,] map;
+        public readonly Point[] mapIndexed = new Point[AREA];
         private int hashcode = 0;
         private Point Zero { get => mapIndexed[0]; }
 
@@ -46,39 +46,6 @@ namespace Eleutherius.Genesis.SlidingPuzzle
             Routes = new List<PuzzleRoute>();
             foreach (var move in puzzle.Routes) Routes.Add((PuzzleRoute) move.Clone());           
         }
-
-        public int CalculateDistance(Puzzle objective) {
-            int total = 0;
-            for (int i = 0; i < AREA; i++) 
-            {
-                var route = new PuzzleRoute() {
-                    From = mapIndexed[i],
-                    To = objective.mapIndexed[i]
-                };
-
-                total += route.ManhattanDistance;
-            }
-            
-            return total;
-        }
-
-        public int CalculateDistance2(Puzzle objective)
-        {
-            int total = 0;
-            for (int i = 0; i < AREA; i++)
-            {
-                var route = new PuzzleRoute()
-                {
-                    From = mapIndexed[i],
-                    To = objective.mapIndexed[i]
-                };
-
-                total += route.From != route.To ? 1 : 0;
-            }
-
-            return total;
-        }
-
         /**
          * ## PROPERTIES ##
          **/

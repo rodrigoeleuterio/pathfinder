@@ -6,9 +6,9 @@ namespace Eleutherius.Genesis.Terminal
 {
     class Program
     {
-        private static byte[,] startMap;
-        private static PuzzleNode node;
-        private static string result;
+        public static byte[,] startMap;
+        public static PuzzleNode node;
+        public static string result;
 
         static void Main(string[] args)
         {

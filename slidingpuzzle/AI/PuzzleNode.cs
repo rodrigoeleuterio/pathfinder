@@ -1,6 +1,4 @@
-﻿using System;
-using Eleutherius.Genesis.Organizer;
-using Eleutherius.Genesis.Pathfinder;
+﻿using Eleutherius.Genesis.Pathfinder;
 
 namespace Eleutherius.Genesis.SlidingPuzzle.AI
 {
