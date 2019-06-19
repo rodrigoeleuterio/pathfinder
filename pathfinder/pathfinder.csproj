@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>genesis.pathfinder</AssemblyName>
-    <RootNamespace>Genesis.Pathfinder</RootNamespace>
+    <AssemblyName>eleutherius.genesis.pathfinder</AssemblyName>
+    <RootNamespace>Eleutherius.Genesis.Pathfinder</RootNamespace>
+    <Authors>Rodrigo Eleutério</Authors>
+    <PackageProjectUrl>https://github.com/rodrigoeleuterio/genesis</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rodrigoeleuterio/genesis</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

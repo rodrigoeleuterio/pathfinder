@@ -1,8 +1,8 @@
-﻿using Genesis.Organizer;
+﻿using Eleutherius.Genesis.Organizer;
 using System;
 using System.Collections.Generic;
 
-namespace Genesis.Pathfinder
+namespace Eleutherius.Genesis.Pathfinder
 {
     public abstract class Analizer<N, T, E> where N: Node<T, E> where T: IEnvironment<E> where E: IRoute
     {

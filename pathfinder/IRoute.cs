@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 
-namespace Genesis.Pathfinder
+namespace Eleutherius.Genesis.Pathfinder
 {
     public interface IRoute : ICloneable
     {

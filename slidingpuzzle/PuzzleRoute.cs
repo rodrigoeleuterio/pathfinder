@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using Genesis.Pathfinder;
+using Eleutherius.Genesis.Pathfinder;
 
-namespace Genesis.SlidingPuzzle
+namespace Eleutherius.Genesis.SlidingPuzzle
 {
     public class PuzzleRoute : IRoute
     {

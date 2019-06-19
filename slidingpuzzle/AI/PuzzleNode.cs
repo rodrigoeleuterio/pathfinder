@@ -1,8 +1,8 @@
 ﻿using System;
-using Genesis.Organizer;
-using Genesis.Pathfinder;
+using Eleutherius.Genesis.Organizer;
+using Eleutherius.Genesis.Pathfinder;
 
-namespace Genesis.SlidingPuzzle.AI
+namespace Eleutherius.Genesis.SlidingPuzzle.AI
 {
     public class PuzzleNode : Node<Puzzle, PuzzleRoute>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Genesis.Organizer.Xunit
+namespace Eleutherius.Genesis.Organizer.Xunit
 {
     public class RaffleOrganizerTest
     {

@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>Genesis.SlidingPuzzle</RootNamespace>
-    <AssemblyName>genesis.slidingpuzzle</AssemblyName>
+    <RootNamespace>Eleutherius.Genesis.SlidingPuzzle</RootNamespace>
+    <AssemblyName>eleutherius.genesis.slidingpuzzle</AssemblyName>
+    <Authors>Rodrigo Eleutério</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/rodrigoeleuterio/genesis</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rodrigoeleuterio/genesis</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

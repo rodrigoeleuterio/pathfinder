@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Genesis.Organizer
+namespace Eleutherius.Genesis.Organizer
 {
     public class StackOrganizer<T> : IOrganizer<T>
     {

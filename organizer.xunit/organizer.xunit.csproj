@@ -5,9 +5,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>Genesis.Organizer.Xunit</RootNamespace>
+    <RootNamespace>Eleutherius.Genesis.Organizer.Xunit</RootNamespace>
 
-    <AssemblyName>genesis.organizer.xunit</AssemblyName>
+    <AssemblyName>eleutherius.genesis.organizer.xunit</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

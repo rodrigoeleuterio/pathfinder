@@ -1,8 +1,8 @@
-﻿using Genesis.SlidingPuzzle;
-using Genesis.SlidingPuzzle.AI;
+﻿using Eleutherius.Genesis.SlidingPuzzle;
+using Eleutherius.Genesis.SlidingPuzzle.AI;
 using System;
 
-namespace Genesis.Terminal
+namespace Eleutherius.Genesis.Terminal
 {
     class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace Genesis.Organizer
+﻿namespace Eleutherius.Genesis.Organizer
 {
     public interface IOrganizer<T>
     {

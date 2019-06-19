@@ -1,9 +1,9 @@
-﻿using Genesis.Organizer;
-using Genesis.Pathfinder;
+﻿using Eleutherius.Genesis.Organizer;
+using Eleutherius.Genesis.Pathfinder;
 using System;
 using System.Collections.Generic;
 
-namespace Genesis.SlidingPuzzle.AI
+namespace Eleutherius.Genesis.SlidingPuzzle.AI
 {
     public class PuzzleAnalizer : Analizer<PuzzleNode, Puzzle, PuzzleRoute>
     {

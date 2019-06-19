@@ -1,6 +1,6 @@
-﻿using Genesis.Organizer;
+﻿using Eleutherius.Genesis.Organizer;
 
-namespace Genesis.Pathfinder
+namespace Eleutherius.Genesis.Pathfinder
 {
     public abstract class Node<T, E> : IPriority where T : IEnvironment<E>
     {

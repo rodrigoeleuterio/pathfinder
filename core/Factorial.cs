@@ -1,4 +1,4 @@
-﻿namespace Genesis.Core
+﻿namespace Eleutherius.Genesis.Core
 {
     public static class Factorial
     {

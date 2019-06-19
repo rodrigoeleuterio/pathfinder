@@ -1,11 +1,11 @@
-﻿using Genesis.Core;
-using Genesis.Pathfinder;
+﻿using Eleutherius.Genesis.Core;
+using Eleutherius.Genesis.Pathfinder;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace Genesis.SlidingPuzzle
+namespace Eleutherius.Genesis.SlidingPuzzle
 {
     public class Puzzle : IEnvironment<PuzzleRoute>
     {

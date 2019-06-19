@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Genesis.Organizer.Xunit
+namespace Eleutherius.Genesis.Organizer.Xunit
 {
     public class AscendentOrganizerTest
     {
@@ -10,7 +10,7 @@ namespace Genesis.Organizer.Xunit
         private const string THIRD = "Third Element:20";
         private const string FORTH = "Fourth Element:25";
 
-        protected AscendentOrganizer<PriorityObject<string>> organizer;
+        protected AscendentOrganizer<PriorityObject> organizer;
 
         public class Put : AscendentOrganizerTest
         {
@@ -106,17 +106,17 @@ namespace Genesis.Organizer.Xunit
 
         protected void GivenInitAscendentOrganizer(string[] init)
         {
-            organizer = new AscendentOrganizer<PriorityObject<string>>();
+            organizer = new AscendentOrganizer<PriorityObject>();
             foreach (var item in init)
             {
                 organizer.Put(CreatePriorityObject(item));
             }
         }
 
-        private static PriorityObject<string> CreatePriorityObject(string item)
+        private static PriorityObject CreatePriorityObject(string item)
         {
             var splitted = item.Split(":");
-            return new PriorityObject<string>()
+            return new PriorityObject()
             {
                 Value = splitted[0],
                 PriorityValue = int.Parse(splitted[1])

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Genesis.Organizer
+namespace Eleutherius.Genesis.Organizer
 {
     public class AscendentOrganizer<T> : IOrganizer<T> where T: IPriority
     {

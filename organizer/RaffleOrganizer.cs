@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Genesis.Organizer
+namespace Eleutherius.Genesis.Organizer
 {
     public class RaffleOrganizer<T> : IOrganizer<T>
     {

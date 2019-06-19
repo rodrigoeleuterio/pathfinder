@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Ganesis.Core</RootNamespace>
-    <AssemblyName>genesis.core</AssemblyName>
+    <RootNamespace>Eleutherius.Genesis.Core</RootNamespace>
+    <AssemblyName>eleutherius.genesis.core</AssemblyName>
+    <Authors>Rodrigo Eleutério</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/rodrigoeleuterio/genesis</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rodrigoeleuterio/genesis</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
 </Project>
