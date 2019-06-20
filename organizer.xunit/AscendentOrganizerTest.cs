@@ -74,6 +74,7 @@ namespace Eleutherius.Genesis.Organizer.Xunit
             [Theory]
             [InlineData(new string[] { FIRST, SECOND, THIRD }, SECOND)]
             [InlineData(new string[] { FIRST, FORTH, THIRD }, FIRST)]
+            [InlineData(new string[] { FIRST }, FIRST)]
             public void GivenInitOrganizerWhenDrawValueShouldReturnLeastPriorityValueAndHaveMinusOneElement(string[] init, string expected)
             {
                 GivenInitAscendentOrganizer(init);
